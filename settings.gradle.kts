@@ -21,4 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "SecureMate"
 include(":app")
- 
+include(":sms_scanner")
+include(":wifi_scanner")
+include(":intruder_selfie")
+include(":permission_monitor")
+include(":developer_options_toggle")
+include(":link_interceptor")
+include(":file_scanner")
