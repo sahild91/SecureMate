@@ -12,10 +12,11 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/developer_options_toggle" />
             <option value="$PROJECT_DIR$/file_scanner" />
+            <option value="$PROJECT_DIR$/flagged_links_logger" />
             <option value="$PROJECT_DIR$/intruder_selfie" />
-            <option value="$PROJECT_DIR$/link_interceptor" />
             <option value="$PROJECT_DIR$/permission_monitor" />
             <option value="$PROJECT_DIR$/sms_scanner" />
+            <option value="$PROJECT_DIR$/universal_link_guard" />
             <option value="$PROJECT_DIR$/wifi_scanner" />
           </set>
         </option>
