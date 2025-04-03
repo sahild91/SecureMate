@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey
 data class FlaggedLink(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val url: String,
+    val sender: String,
     val timestamp: Long,
-    val reason: String
+    val reason: String,
+    val threatLevel: String,
+    val message: String
 )

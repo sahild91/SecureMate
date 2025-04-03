@@ -61,6 +61,8 @@ dependencies {
     implementation(project(":universal_link_guard"))
     implementation(project(":file_scanner"))
     implementation(project(":flagged_links_logger"))
+    implementation(project(":threat_model"))
+    implementation(libs.androidx.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
