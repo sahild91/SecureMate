@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.securemate.developer_options_toggle"
+    namespace = "com.example.securemate.link_interceptor"
     compileSdk = 35
 
     defaultConfig {

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.securemate.link_interceptor"
+    namespace = "com.example.securemate.threat_model"
     compileSdk = 35
 
     defaultConfig {
