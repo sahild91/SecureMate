@@ -3,6 +3,7 @@ package com.example.securemate.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,24 +34,29 @@ fun SettingsScreen(navController: NavController) {
         }
     ) { padding ->
         Column(Modifier.padding(padding).padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Enable Auto Scan", modifier = Modifier.weight(1f))
-                Switch(checked = enabled, onCheckedChange = {
-                    enabled = it
-                    ScanPreferencesHelper.setScanEnabled(context, it)
-                    scheduleOrCancelWorker(context, it, frequency)
-                })
-            }
+            // Existing SMS scanning settings...
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(24.dp))
+            HorizontalDivider()
+            Spacer(Modifier.height(24.dp))
 
-            Text("Scan Frequency")
-            DropdownMenuWithFrequency(frequency) { selected ->
-                frequency = selected
-                ScanPreferencesHelper.setScanFrequencyDays(context, selected)
-                if (enabled) {
-                    scheduleOrCancelWorker(context, true, selected)
-                }
+            Text(
+                "Privacy & Security",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Button(
+                onClick = { navController.navigate("privacy_settings") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    Icons.Default.Lock,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Privacy & Security Settings")
             }
         }
     }

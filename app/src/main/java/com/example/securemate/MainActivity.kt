@@ -1,10 +1,10 @@
 package com.example.securemate
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,24 +14,81 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import com.example.securemate.app_lock.BiometricAuthHelper
 import com.example.securemate.ui.BulkScanScreen
 import com.example.securemate.ui.HomeScreen
+import com.example.securemate.ui.PinLockScreen
+import com.example.securemate.ui.PinSetupScreen
+import com.example.securemate.ui.PrivacySettingsScreen
 import com.example.securemate.ui.SettingsScreen
 import com.example.securemate.ui.SplashScreen
 import com.example.securemate.ui.SuspiciousLinksScreen
 import com.example.securemate.ui.theme.SecureMateTheme
 import com.example.securemate.viewmodel.SuspiciousLinksViewModel
 
-class MainActivity : ComponentActivity() {
-
+class MainActivity : FragmentActivity() {
     private val viewModel: SuspiciousLinksViewModel by viewModels()
+    private var isAuthenticated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Check if biometric auth is enabled in preferences
+        val securityPrefs = getSharedPreferences("security_prefs", Context.MODE_PRIVATE)
+        val biometricEnabled = securityPrefs.getBoolean("biometric_auth_enabled", false)
+        val pinEnabled = securityPrefs.getBoolean("pin_auth_enabled", false)
+
+        when {
+            biometricEnabled -> {
+                BiometricAuthHelper(this).showBiometricPrompt {
+                    isAuthenticated = true
+                    initializeApp()
+                }
+            }
+            pinEnabled -> {
+                // Will use the PIN screen in setContent
+                isAuthenticated = false
+                initializeApp()
+            }
+            else -> {
+                isAuthenticated = true
+                initializeApp()
+            }
+        }
+    }
+
+    private fun initializeApp() {
         setContent {
             SecureMateTheme {
-                RequestNotificationPermission()
-                SecureMateNavGraph(viewModel)
+                if (!isAuthenticated && getSharedPreferences("security_prefs", Context.MODE_PRIVATE)
+                        .getBoolean("pin_auth_enabled", false)) {
+                    PinLockScreen(
+                        onPinVerified = {
+                            isAuthenticated = true
+                            // Redraw the UI after authentication succeeds
+                            setContent {
+                                SecureMateTheme {
+                                    RequestNotificationPermission()
+                                    SecureMateNavGraph(viewModel)
+                                }
+                            }
+                        },
+                        onFallback = {
+                            // If PIN validation fails or doesn't exist
+                            isAuthenticated = true
+                            setContent {
+                                SecureMateTheme {
+                                    RequestNotificationPermission()
+                                    SecureMateNavGraph(viewModel)
+                                }
+                            }
+                        }
+                    )
+                } else {
+                    RequestNotificationPermission()
+                    SecureMateNavGraph(viewModel)
+                }
             }
         }
     }
@@ -56,6 +113,12 @@ fun SecureMateNavGraph(viewModel: SuspiciousLinksViewModel) {
         }
         composable("settings") {
             SettingsScreen(navController)
+        }
+        composable("privacy_settings") {
+            PrivacySettingsScreen(navController)
+        }
+        composable("pin_setup") {
+            PinSetupScreen(navController)
         }
     }
 }
