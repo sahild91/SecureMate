@@ -85,4 +85,5 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata")
     implementation("androidx.compose.runtime:runtime")
     implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
 }
