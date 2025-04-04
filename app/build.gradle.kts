@@ -1,7 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.application")
+    kotlin("android")
     id("kotlin-kapt")
 }
 
@@ -39,7 +38,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3" // Match your Compose version
+        kotlinCompilerExtensionVersion = "1.5.10" // Match your Compose version
     }
 }
 
