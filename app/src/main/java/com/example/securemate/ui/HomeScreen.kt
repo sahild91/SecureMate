@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.securemate.ui.navigation.NavRoutes
+import com.example.securemate.wifi_scanner.ui.WifiNavConstants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +26,7 @@ fun HomeScreen(navController: NavController) {
             TopAppBar(
                 title = { Text("SecureMate") },
                 actions = {
-                    IconButton(onClick = { navController.navigate("settings") }) {
+                    IconButton(onClick = { navController.navigate(NavRoutes.SETTINGS) }) {
                         Icon(Icons.Default.Settings, contentDescription = "Settings")
                     }
                 }
@@ -40,18 +41,18 @@ fun HomeScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             FeatureCard("Suspicious Links Log", "View detected SMS threats", Icons.Default.Laptop) {
-                navController.navigate("suspicious_links")
+                navController.navigate(NavRoutes.LINKS_LOG)
             }
             FeatureCard("Bulk Scan SMS", "Scan older SMS for threats", Icons.Default.Sms) {
-                navController.navigate("bulk_scan")
+                navController.navigate(NavRoutes.BULK_SCAN)
             }
-//            FeatureCard(
-//                "WiFi Scanner",
-//                "Check WiFi networks for security issues",
-//                Icons.Default.Wifi
-//            ) {
-//                navController.navigate(NavRoutes.WIFI_SCANNER)
-//            }
+            FeatureCard(
+                "WiFi Scanner",
+                "Check WiFi networks for security issues",
+                Icons.Default.Wifi
+            ) {
+                navController.navigate(WifiNavConstants.WIFI_SCANNER)
+            }
         }
     }
 }

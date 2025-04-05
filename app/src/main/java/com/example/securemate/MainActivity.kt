@@ -24,8 +24,11 @@ import com.example.securemate.ui.PrivacySettingsScreen
 import com.example.securemate.ui.SettingsScreen
 import com.example.securemate.ui.SplashScreen
 import com.example.securemate.ui.SuspiciousLinksScreen
+import com.example.securemate.ui.navigation.NavRoutes
 import com.example.securemate.ui.theme.SecureMateTheme
 import com.example.securemate.viewmodel.SuspiciousLinksViewModel
+import com.example.securemate.wifi_scanner.ui.addWifiScannerRoutes
+import com.example.securemate.wifi_scanner.ui.WifiNavConstants
 
 class MainActivity : FragmentActivity() {
     private val viewModel: SuspiciousLinksViewModel by viewModels()
@@ -99,27 +102,29 @@ fun SecureMateNavGraph(viewModel: SuspiciousLinksViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") {
+        composable(NavRoutes.SPLASH) {
             SplashScreen(navController)
         }
-        composable("home") {
+        composable(NavRoutes.HOME) {
             HomeScreen(navController)
         }
-        composable("suspicious_links") {
+        composable(NavRoutes.LINKS_LOG) {
             SuspiciousLinksScreen(viewModel, navController)
         }
-        composable("bulk_scan") {
+        composable(NavRoutes.BULK_SCAN) {
             BulkScanScreen(navController)
         }
-        composable("settings") {
+        composable(NavRoutes.SETTINGS) {
             SettingsScreen(navController)
         }
-        composable("privacy_settings") {
+        composable(NavRoutes.PRIVACY_SETTINGS) {
             PrivacySettingsScreen(navController)
         }
-        composable("pin_setup") {
+        composable(NavRoutes.PIN_SETUP) {
             PinSetupScreen(navController)
         }
+
+        addWifiScannerRoutes(navController)
     }
 }
 
