@@ -114,30 +114,6 @@ fun PrivacySettingsScreen(navController: NavController) {
 
                         // Show PIN setup dialog if enabling
                         if (checked) {
-                            // Launch PIN setup dialog
-                        }
-                    }
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text("Use PIN Lock")
-                    Text(
-                        "Protect with a 4-digit PIN",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                Switch(
-                    checked = pinEnabled,
-                    onCheckedChange = { checked ->
-                        if (checked) {
                             // If enabling PIN, show setup dialog
                             showPinSetupDialog = true
                         } else {
@@ -148,7 +124,6 @@ fun PrivacySettingsScreen(navController: NavController) {
                     }
                 )
             }
-
             if (pinEnabled) {
                 TextButton(
                     onClick = { showPinSetupDialog = true },
